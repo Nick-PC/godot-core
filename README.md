@@ -1,4 +1,4 @@
-# godot-core
+# Nick's godot-core Repo
 Godot resources to be shared between multiple projects
 
 This repository can be added to your Godot projects to provide generally useful functionality like a color replace shader, useful await functions, and more.
