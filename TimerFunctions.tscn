@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cak1prntsl07r"]
+
+[ext_resource type="Script" path="res://core/TimerFunctions.gd" id="1_gimum"]
+
+[node name="TimerFunctions" type="Node"]
+script = ExtResource("1_gimum")

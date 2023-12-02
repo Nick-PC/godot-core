@@ -1,0 +1,63 @@
+shader_type canvas_item;
+
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+
+uniform bool use_entire_screen;
+uniform float color_depth;
+
+uniform vec4 OLDCOLOR1 : source_color;
+uniform vec4 OLDCOLOR2 : source_color;
+uniform vec4 OLDCOLOR3 : source_color;
+uniform vec4 OLDCOLOR4 : source_color;
+
+uniform vec4 NEWCOLOR1 : source_color;
+uniform vec4 NEWCOLOR2 : source_color;
+uniform vec4 NEWCOLOR3 : source_color;
+uniform vec4 NEWCOLOR4 : source_color;
+
+vec4 truncate_vector(vec4 v, float n) {
+    v.x=floor(pow(10,n) * v.x) / pow(10,n);
+    v.y=floor(pow(10,n) * v.y) / pow(10,n);
+    v.z=floor(pow(10,n) * v.z) / pow(10,n);
+	v.a=floor(pow(10,n) * v.a) / pow(10,n);
+	
+    return v;
+}
+
+bool vector_equals(vec4 v1, vec4 v2) {
+	return v1.x == v2.x
+		&& v1.y == v2.y
+		&& v1.z == v2.z
+		&& v1.a == v2.a;
+}
+
+bool is_same_color(vec4 v1, vec4 v2) {
+	return vector_equals(truncate_vector(v1, color_depth),truncate_vector(v2, color_depth));
+}
+
+void fragment() {
+	vec4 curr_color;
+	
+	if (use_entire_screen) {
+		curr_color = texture(screen_texture, SCREEN_UV);
+	}
+	else {
+		curr_color = texture(TEXTURE, UV);
+	}
+	
+	if (is_same_color(curr_color, OLDCOLOR1)) {
+		COLOR = NEWCOLOR1;
+	}
+	else if (is_same_color(curr_color, OLDCOLOR2)) {
+		COLOR = NEWCOLOR2;
+	}
+	else if (is_same_color(curr_color, OLDCOLOR3)) {
+		COLOR = NEWCOLOR3;
+	}
+	else if (is_same_color(curr_color, OLDCOLOR4)) {
+		COLOR = NEWCOLOR4;
+	}
+	else {
+		COLOR = curr_color;
+	}
+}
