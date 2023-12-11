@@ -4,3 +4,5 @@
 
 [node name="SFXFunctions" type="Node"]
 script = ExtResource("1_m8oy2")
+
+[node name="DefaultPlayer" type="AudioStreamPlayer" parent="."]
