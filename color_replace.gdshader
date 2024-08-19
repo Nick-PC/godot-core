@@ -5,15 +5,9 @@ uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_n
 uniform bool use_entire_screen;
 uniform float color_depth;
 
-uniform vec4 OLDCOLOR1 : source_color;
-uniform vec4 OLDCOLOR2 : source_color;
-uniform vec4 OLDCOLOR3 : source_color;
-uniform vec4 OLDCOLOR4 : source_color;
-
-uniform vec4 NEWCOLOR1 : source_color;
-uniform vec4 NEWCOLOR2 : source_color;
-uniform vec4 NEWCOLOR3 : source_color;
-uniform vec4 NEWCOLOR4 : source_color;
+const int number_of_colors = 5;
+uniform vec4 OLD_COLORS[number_of_colors]: source_color;
+uniform vec4 NEW_COLORS[number_of_colors]: source_color;
 
 vec4 truncate_vector(vec4 v, float n) {
     v.x=floor(pow(10,n) * v.x) / pow(10,n);
@@ -45,19 +39,17 @@ void fragment() {
 		curr_color = texture(TEXTURE, UV);
 	}
 	
-	if (is_same_color(curr_color, OLDCOLOR1)) {
-		COLOR = NEWCOLOR1;
+	bool replaced_color = false;
+	
+	for (int i=0; i<number_of_colors; i++) {
+		if (is_same_color(curr_color, OLD_COLORS[i])) {
+			COLOR = NEW_COLORS[i];
+			replaced_color = true;
+			break;
+		}
 	}
-	else if (is_same_color(curr_color, OLDCOLOR2)) {
-		COLOR = NEWCOLOR2;
-	}
-	else if (is_same_color(curr_color, OLDCOLOR3)) {
-		COLOR = NEWCOLOR3;
-	}
-	else if (is_same_color(curr_color, OLDCOLOR4)) {
-		COLOR = NEWCOLOR4;
-	}
-	else {
+	
+	if (!replaced_color) {
 		COLOR = curr_color;
 	}
 }
