@@ -2,7 +2,7 @@ extends Node
 
 @onready var default_player = $DefaultPlayer
 
-func play_sound_on_player(sound: AudioStream, player : AudioStreamPlayer):
+func play_sound_on_player(sound: AudioStream, player: AudioStreamPlayer):
 	player.stream = sound
 	player.play()
 

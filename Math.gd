@@ -1,7 +1,7 @@
 extends Node
 
 #returns -1, 0, or 1 to denote normalized "direction" of a value
-func normalize(value):
+func normalize(value: float) -> int:
 	if value == 0:
 		return 0
 	else:
