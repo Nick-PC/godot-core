@@ -3,6 +3,9 @@ extends Node
 func seconds_from_frames(frames: int) -> float:
 	return 1.0 * frames / ProjectSettings.get_setting("application/run/max_fps")
 
+func frames_from_seconds(seconds: float) -> int:
+	return 1.0 * seconds * ProjectSettings.get_setting("application/run/max_fps")
+
 func wait_frames(frames: int):
 	var seconds: float = seconds_from_frames(frames)
 	return wait_seconds(seconds)
